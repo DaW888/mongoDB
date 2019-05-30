@@ -19,4 +19,34 @@ class Net {
             },
         });
     }
+    refreshUsers(){
+        $.ajax({
+            url: '../server.js',
+            data: { action: 'refreshUsers'},
+            type: 'POST',
+            success: function(data) {
+                const obj = JSON.parse(data);
+                console.log(obj);
+                main.getData(obj.data);
+            },
+            error: function(xhr, status, error) {
+                console.log(xhr, status, error);
+            },
+        });
+    }
+
+    removeUser(id){
+        $.ajax({
+            url: '../server.js',
+            data: { action: 'removeUser', id},
+            type: 'POST',
+            success: function(data) {
+                const obj = JSON.parse(data);
+                console.log(obj);
+            },
+            error: function(xhr, status, error) {
+                console.log(xhr, status, error);
+            },
+        });
+    }
 }

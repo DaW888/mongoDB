@@ -2,15 +2,16 @@ module.exports = {
      //insert
      Insert: function (collection, data) {
          console.log(data.login, data.pass);
-        // collection.insert(data, function (err, result) {
-        //     console.log(result)
-        // });
+        collection.insert(data, function (err, result) {
+            console.log(result);
+        });
     },
 
     //select all - zwraca tablicę pasujących dokumentów
-    SelectAll: function (collection) {
+    SelectAll: function (collection, call) {
         collection.find({}).toArray(function (err, items) {
-            console.log(items)
+            console.log(items);
+            call(items);
         });
     },
 
@@ -23,8 +24,9 @@ module.exports = {
 
     //delete - usunięcie poprzez id - uwaga na ObjectID
     DeleteById: function (ObjectID, collection, id) {
+        console.log(id);
         collection.remove({ _id: ObjectID(id) }, function (err, data) {
-            console.log(data)
+            // console.log(data);
         })
     },
 

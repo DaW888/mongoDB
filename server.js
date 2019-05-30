@@ -91,9 +91,9 @@ mongoClient.connect('mongodb://localhost/3ic2', (err, _db) => {
     db = _db;
     _db.createCollection("testowa", function (err, coll) {
         console.log('kolekcja powstala');
-        coll.insert({a: 1}, function (err, res) {
-            console.log('dokument powstal');
-        })
+        // coll.insert({a: 1}, function (err, res) {
+        //     console.log('dokument powstal');
+        // })
     })
 })
 
@@ -131,9 +131,27 @@ function servResponse(req, res) {
             // } else{
             //     result = {message: 'Taki użytkownik już istnieje', canLogin: false};
             // }
-            opers.Insert(coll, finish);
+            result = {login: finish.login, pass: finish.pass};
+            opers.Insert(coll, result);
 
             res.end(JSON.stringify(result, null, 2));
+            break;
+
+        case 'refreshUsers':
+            opers.SelectAll(coll, (data) => {
+                console.log('oonserver');
+                console.log(data);
+                result = {data};
+                res.end(JSON.stringify(result, null, 2));
+
+            });
+            // res.end(JSON.stringify(result, null, 2));
+            break;
+
+        case 'removeUser':
+            opers.DeleteById(ObjectID, coll, finish.id);
+            res.end(JSON.stringify(null, null, 2));
+
             break;
 
         case 'updateCheckersArray':
