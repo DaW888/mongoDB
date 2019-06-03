@@ -29,6 +29,17 @@ class Main {
                 return el._id == $('#selUsers').val();
             })
             console.log(thisEl);
+            $('#inpLogin').val(thisEl.login);
+            $('#inpPass').val(thisEl.pass);
+        })
+
+        $('#btUpdatePass').click(() => {
+            const id = $('#selUsers').val();
+            console.log(id);
+            const pass = $('#inpPass').val();
+            console.log(pass);
+            net.updatePass(id, pass);
+
         })
     }
 

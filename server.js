@@ -116,21 +116,6 @@ function servResponse(req, res) {
         var result = null;
         switch (finish.action) {
         case 'addUser':
-            
-            // sprawdza czy taki user wystepuje juz w tabeli
-            // var isSameUser = usersTab.find(user => user === finish.user);
-            // if(!isSameUser){
-            //     usersTab.push(finish.user); // w przyszłości socket.io i IP goscia
-            //     if(usersTab.length > 2){
-            //         result = {message: 'Gra już za dużo użytkowników', canLogin: false};
-            //         usersTab.pop();
-            //     }
-            //     else
-            //         result = {message: 'Zalogowano', canLogin: true, users: usersTab};
-
-            // } else{
-            //     result = {message: 'Taki użytkownik już istnieje', canLogin: false};
-            // }
             result = {login: finish.login, pass: finish.pass};
             opers.Insert(coll, result);
 
@@ -154,21 +139,11 @@ function servResponse(req, res) {
 
             break;
 
-        case 'updateCheckersArray':
-            var setting = JSON.parse(finish.setting);
-            console.log(setting);
-            var kill = false;
-            console.log(checkersTab[setting.from.x][setting.from.y]);
-            console.log(checkersTab[setting.target.x][setting.target.y]);
-
-            if(checkersTab[setting.target.x][setting.target.y] != 0)    kill = true;
-
-            checkersTab[setting.from.x][setting.from.y] = 0;
-            checkersTab[setting.target.x][setting.target.y] = setting.color == 'blueChecker' ? 1 : 2;
-            console.log('asd' + checkersTab[setting.target.x][setting.target.y] + setting.color);
-
-            returnSetting = {...setting, kill: kill};
-            res.end(JSON.stringify({...setting, kill: kill}, null, 2));
+        case 'updatePass':
+            console.log('witaj'+finish.pass);
+            result = {id: finish.id, pass: finish.pass};
+            opers.UpdateById(ObjectID, coll, result);
+            res.end(JSON.stringify(null, null, 2));
             break;
         }
     });

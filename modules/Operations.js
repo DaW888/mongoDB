@@ -36,8 +36,8 @@ module.exports = {
 
     UpdateById: function (ObjectID, collection, data){
         collection.updateOne(
-            { _id: ObjectID("id_dokumentu_ktory_chcemy_usunac") },
-            { $set: { pass: "test" } },
+            { _id: ObjectID(data.id) },
+            { $set: { pass: data.pass } },
             function (err, data) {
                 console.log("update: "+data)
             })
